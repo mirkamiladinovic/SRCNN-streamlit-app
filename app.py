@@ -36,9 +36,6 @@ if uploaded_file:
     col2.image(cv2.cvtColor(degraded, cv2.COLOR_BGR2RGB), caption="Degraded", use_container_width=True)
     col3.image(cv2.cvtColor(output, cv2.COLOR_BGR2RGB), caption="SRCNN Output", use_container_width=True)
 
-    # result_img = Image.fromarray(output)
-    # get_image_download_link(result_img, f"{tmp.name.lower().replace(' ', '_')}_upscaled.png", "Preuzmi sliku")
-
     st.write("### Metrics Comparison")
     st.table({
         "Metric": ["PSNR", "MSE", "SSIM"],
@@ -46,13 +43,11 @@ if uploaded_file:
         "SRCNN Output": [f"{scores_output[0]:.2f}", f"{scores_output[1]:.2f}", f"{scores_output[2]:.4f}"]
     })
 
-    # Prikaz pojedinačnih grafova za PSNR, MSE i SSIM u jednom redu
     metric_names = ["PSNR", "MSE", "SSIM"]
     degraded_vals = scores_degraded
     output_vals = scores_output
     colors = ["orange", "green"]
 
-    # Kreiraj 3 grafa u jednom redu
     fig, axs = plt.subplots(1, 3, figsize=(18, 6))
 
     for i in range(3):
@@ -61,7 +56,6 @@ if uploaded_file:
         axs[i].set_ylabel(metric_names[i])
         axs[i].set_title(f"{metric_names[i]} Comparison")
 
-        # Dodavanje vrednosti iznad stubića
         for bar in bars:
             height = bar.get_height()
             axs[i].annotate(f'{height:.2f}',
@@ -70,7 +64,6 @@ if uploaded_file:
                             textcoords="offset points",
                             ha='center', va='bottom')
 
-    # Prikaz na Streamlit-u
     st.pyplot(fig)
 
 
